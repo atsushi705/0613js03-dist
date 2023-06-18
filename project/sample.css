@@ -1,0 +1,51 @@
+div {
+    width: 350px;
+    margin: auto;
+    background-color: #b1d2f1;
+}
+
+#output {
+    background-color: #75eb4d;
+    width: 80%;
+    border-radius: 30px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .4);
+    padding: 5%;
+    /* margin-left: %; */
+}
+
+#uname {
+    /* margin-left: 10%; */
+    background-color: #efefdacd;
+
+}
+
+#text {
+    background-color: #efefdacd;
+    margin-left: 40px;
+    /* text-align: center; */
+
+}
+
+#send {
+    background-color: #b1d2f1;
+    border: solid 1px #b1d2f1;
+
+}
+
+.koment {
+    background: url("imgs/line_fukidasi_02.png");
+
+}
+
+.newPostRef {
+    background: url("imgs/line_fukidasi_02.png");
+
+}
+
+.name {
+    text-align: center;
+    /* margin-left: 5%; */
+    margin-bottom: 10px;
+    padding-top: 3%;
+    /* padding-right: 10%; */
+}

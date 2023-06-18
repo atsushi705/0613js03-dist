@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Chatアプリ</title>
+    <link rel="stylesheet" href="sample.css">
+</head>
+
+<body>
+
+
+
+    <!-- コンテンツ表示画面 -->
+
+    <div>
+        <div class="name">
+            Name:
+             <input type="text" id="uname">
+        </div>
+        <div>
+            <textarea name="" id="text" cols="32" rows="10"></textarea>
+            <button id="send"><img src="imgs/22633428-1.png" height ="40" width=""></button>
+        </div>
+        <div id="output" style="overflow: auto; height: 300px; padding-bottom: 10px;"></div>
+    </div>
+
+    <!-- 
+    / コンテンツ表示画面 -->
+
+
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- JQuery -->
+
+
+    <!--** 以下Firebase **-->
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+            from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: " ",
+            authDomain: "fir-demo-e6c80.firebaseapp.com",
+            projectId: "fir-demo-e6c80",
+            storageBucket: "fir-demo-e6c80.appspot.com",
+            messagingSenderId: "29523937847",
+            appId: "1:29523937847:web:b6d3b20151388ec8b0cdb2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Realtime DB に接続する
+        const db = getDatabase(app);
+        const dbRef = ref(db, "chat");
+
+        // 送信ボタンが押されたら、データをDBに送信
+        $("#send").on("click", function () {
+
+            // 保存したいデータのオブジェクトを作る
+            const msg = {
+                uname: $("#uname").val(),
+                text: $("#text").val()
+            };
+            console.log(msg);
+
+            // 新規のデータを送れる状態にセット
+            const newPostRef = push(dbRef);
+
+            // DBに値を送信
+            set(newPostRef, msg);
+
+        });
+
+
+        //   // なんか惜しい2、エンターキーが押されたら、データをDBに送信
+        //   $("#text").on("keydown", function (e) {
+        // if (e.keyCode === 13) ;
+
+        //     // 保存したいデータのオブジェクトを作る
+        //     const msg = {
+        //         uname: $("#uname").val(),
+        //         text: $("#text").val()
+        //     };
+        //     console.log(e);
+
+        //     // 新規のデータを送れる状態にセット
+        //     const newPostRef = push(dbRef);
+
+        //     // DBに値を送信
+        //     set(newPostRef, msg);
+
+        // });
+
+
+        onChildAdded(dbRef, function (data) {
+            const msg = data.val();
+            const key = data.key;
+            // id="${key} class="message" を追記
+            const h = `<p id="${key}" class="message">${msg.uname}: ${msg.text}</p>`;
+            $('#output').append(h);
+        });
+
+        // デリート指示前の文
+        // onChildAdded(dbRef, function (data) {
+        //     const msg = data.val();
+        //     const key = data.key;
+
+        //     $("#output").append(`<p>${msg.uname}: ${msg.text}</p>`)
+        // });
+
+        //惜しい削除元
+        $(function () {
+            $(document).on("click", "#output", function (e) {
+                // $(this)でイベントが発生した要素を取得して削除する
+
+                var result = confirm('メッセージを削除しますか？');
+
+                if (result) {
+                    //はいを選んだときの処理
+                    $(this).remove();
+                } else {
+                    //いいえを選んだときの処理
+                }
+
+            });
+        });
+
+
+
+
+
+
+
+            // 送信ボタンが押されたら、データをDBに送信
+            //  $("#send").on("click", function () {
+
+            // // 保存したいデータのオブジェクトを作る
+            // const msg = {
+            //     uname: $("#uname").val(),
+            //     text: $("#text").val()
+            // };
+            // console.log(msg);
+
+            // // 新規のデータを送れる状態にセット
+            // const newPostRef = push(dbRef);
+
+            // // DBに値を送信
+            // set(newPostRef, msg);
+
+// });
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
